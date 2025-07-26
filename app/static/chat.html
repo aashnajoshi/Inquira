@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Indium Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-100 flex flex-col items-center min-h-screen p-6">
+
+  <div class="max-w-2xl w-full flex flex-col bg-gray-800 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-semibold p-6 border-b border-gray-700">Indium Chatbot</h1>
+
+    <div id="chat-box" class="flex flex-col flex-grow p-6 space-y-4 overflow-y-auto" style="height: 500px;">
+      <!-- Chat messages will be appended here -->
+    </div>
+
+    <form id="chat-form" class="flex border-t border-gray-700">
+      <input id="question-input" type="text" placeholder="Ask something..."
+        class="flex-grow bg-gray-700 text-gray-200 p-4 focus:outline-none rounded-bl-lg" required />
+      <button type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 transition-colors duration-200 rounded-br-lg">
+        Send
+      </button>
+    </form>
+  </div>
+
+  <script src="static/chatbot.js"></script>
+</body>
+
+</html>

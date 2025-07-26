@@ -1,0 +1,66 @@
+[
+    {
+        "id": "1",
+        "content": "Indium provides AI and analytics services including MLOps, NLP, and computer vision.",
+        "metadata": {
+            "title": "AI & Analytics",
+            "url": "https://www.indium.tech/data-gen-ai/"
+        }
+    },
+    {
+        "id": "2",
+        "content": "Indium has experience in BFSI, healthcare, retail, manufacturing, technology, and more industries.",
+        "metadata": {
+            "title": "Industries Served",
+            "url": "https://www.indium.tech/industries/"
+        }
+    },
+    {
+        "id": "3",
+        "content": "Indium offers Product Engineering services including architecture design, microservices, and cloud-native technologies.",
+        "metadata": {
+            "title": "Product Engineering",
+            "url": "https://www.indium.tech/product-engineering/"
+        }
+    },
+    {
+        "id": "4",
+        "content": "Indium delivers Intelligent Automation solutions such as AI-powered process mining, RPA, and workflow orchestration.",
+        "metadata": {
+            "title": "Intelligent Automation",
+            "url": "https://www.indium.tech/intelligent-automation/"
+        }
+    },
+    {
+        "id": "5",
+        "content": "Indium provides Quality Engineering with AI-driven testing, continuous integration, and DevOps automation.",
+        "metadata": {
+            "title": "Quality Engineering",
+            "url": "https://www.indium.tech/quality-engineering/"
+        }
+    },
+    {
+        "id": "6",
+        "content": "iXie Gaming, a division of Indium, offers end-to-end gaming services including game development, QA, and animation.",
+        "metadata": {
+            "title": "iXie Gaming",
+            "url": "https://www.indium.tech/gaming/"
+        }
+    },
+    {
+        "id": "7",
+        "content": "Success stories demonstrating Indium's impact in digital identity security, pharma, social media, consumer electronics, and financial services.",
+        "metadata": {
+            "title": "Success Stories",
+            "url": "https://www.indium.tech/success-stories/"
+        }
+    },
+    {
+        "id": "8",
+        "content": "Thought leadership articles discussing agile transformation, generative AI for business intelligence, and AI in regression testing.",
+        "metadata": {
+            "title": "Insights",
+            "url": "https://www.indium.tech/insights/"
+        }
+    }
+]
