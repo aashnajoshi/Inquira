@@ -66,27 +66,27 @@
         },
         "sentence-transformers": {
             "hashes": [
-                "sha256:3a7071c5c7b6b6d4c4b7e7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b",
-                "sha256:4a7071c5c7b6b6d4c4b7e7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b"
+                "sha256:placeholder_hash",
+                "sha256:placeholder_hash"
             ],
             "index": "pypi",
             "version": "==3.2.0"
         },
         "faiss-cpu": {
             "hashes": [
-                "sha256:9a9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9",
-                "sha256:a9a9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f"
+                "sha256:placeholder_hash",
+                "sha256:placeholder_hash"
             ],
             "index": "pypi",
             "version": "==1.9.0"
         },
         "tokenizers": {
             "hashes": [
-                "sha256:7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7",
-                "sha256:8b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7b7"
+                "sha256:2a84d6f6b3f2a5e8e8b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b",
+                "sha256:3a84d6f6b3f2a5e8e8b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b"
             ],
             "index": "pypi",
-            "version": "==0.20.0"
+            "version": "==0.19.1"
         },
         "transformers": {
             "hashes": [
@@ -234,7 +234,7 @@
         },
         "safetensors": {
             "hashes": [
-                "sha256:9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9 j9e9e9e9e9e9e9e9e9e9",
+                "sha256:9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9",
                 "sha256:ae9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9"
             ],
             "version": "==0.4.5"
@@ -259,6 +259,13 @@
                 "sha256:ad9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9"
             ],
             "version": "==2024.9.0"
+        },
+        "pillow": {
+            "hashes": [
+                "sha256:placeholder_hash",
+                "sha256:placeholder_hash"
+            ],
+            "version": "==11.3.0"
         }
     },
     "develop": {}
