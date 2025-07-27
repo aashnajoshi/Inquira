@@ -1,7 +1,7 @@
-from app.rag_chain import RAGChain, Generator
-from app.retriever import Retriever
-from app.embedding import Embedder
-from app.vector_store import VectorStore
+from rag_chain import RAGChain, Generator
+from retriever import Retriever
+from embedding import Embedder
+from vector_store import VectorStore
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
