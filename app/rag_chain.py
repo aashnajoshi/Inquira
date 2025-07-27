@@ -1,5 +1,6 @@
 import requests
-from config import OPENROUTER_API_KEY
+from app.config import OPENROUTER_API_KEY
+from app.retriever import Retriever
 
 class Generator:
     def __init__(self):
@@ -32,7 +33,7 @@ class Generator:
             return "Sorry, I couldn't generate an answer at this time."
 
 class RAGChain:
-    def _init_(self, retriever: Retriever, generator: Generator):
+    def __init__(self, retriever: Retriever, generator: Generator):
         self.retriever = retriever
         self.generator = generator
 
