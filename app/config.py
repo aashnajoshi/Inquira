@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-HF_API_TOKEN = os.getenv("HF_API_TOKEN")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-if not HF_API_TOKEN:
-    raise ValueError("Missing Hugging Face API Token")
+if not OPENROUTER_API_KEY:
+    raise ValueError("Missing OpenRouter API Key")
