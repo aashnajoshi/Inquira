@@ -1,6 +1,6 @@
 import requests
-from config import OPENROUTER_API_KEY
-from retriever import Retriever
+from app.config import OPENROUTER_API_KEY
+from app.retriever import Retriever
 
 class Generator:
     def __init__(self):
