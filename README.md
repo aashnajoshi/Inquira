@@ -25,10 +25,10 @@ RAG-Chatbot is an AI-powered assistant that uses Retrieval Augmented Generation 
    ```bash
    pipenv install
    ```
-        or
-    ```bash
-    pip install -r requirements.txt
-    ```
+   or
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 4. Ensure that the `.env` file contains your OpenRouter API key.
 
