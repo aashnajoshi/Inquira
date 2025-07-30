@@ -1,5 +1,5 @@
-# RAG-Chatbot
-RAG-Chatbot is an AI-powered assistant that uses Retrieval Augmented Generation (RAG) to answer questions about Indium’s services. It leverages semantic search and generative models to return intelligent, context-aware responses from a curated knowledge base.
+# Inquira
+Inquira is an AI-powered assistant that uses Retrieval Augmented Generation (RAG) to answer questions about Indium’s services. It leverages semantic search and generative models to return intelligent, context-aware responses from a curated knowledge base.
 
 ## Features
 - Retrieval-Augmented Generation (RAG) architecture.
