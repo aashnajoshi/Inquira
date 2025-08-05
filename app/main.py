@@ -6,12 +6,11 @@ from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import json
-import os
+from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-static_dir = os.path.join(BASE_DIR, "app", "static")
-docs_path = os.path.join(BASE_DIR, "data", "documents.json")
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+docs_path = BASE_DIR / "data" / "documents.json"
+static_dir = BASE_DIR / "app" / "static"
 app = FastAPI()
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
@@ -19,22 +18,23 @@ with open(docs_path, encoding="utf-8") as f:
     docs = json.load(f)
 
 embedder = Embedder()
-vector_store = VectorStore(dimension=384)
+vector_store = VectorStore(dimension=768)
 texts = [doc['content'] for doc in docs]
 embeddings = embedder.embed_texts(texts)
 vector_store.add(embeddings, docs)
 retriever = Retriever(embedder, vector_store)
 generator = Generator()
-rag_chain = RAGChain(retriever, generator)
+rag_chain = RAGChain(retriever, generator, docs)
 
 @app.get("/", response_class=FileResponse)
 async def serve_chat_ui():
-    return FileResponse(os.path.join(static_dir, "chat.html"))
+    return FileResponse(static_dir / "chat.html")
 
 @app.post("/ask")
 async def ask(request: Request):
     data = await request.json()
     question = data.get("question")
-    if not question: return {"answer": "Please provide a question."}
+    if not question:
+        return {"answer": "Please provide a question."}
     answer = rag_chain.answer_question(question)
     return {"answer": answer}
