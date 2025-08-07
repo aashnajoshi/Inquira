@@ -1,5 +1,5 @@
-from embedding import Embedder
-from vector_store import VectorStore
+from app.embedding import Embedder
+from app.vector_store import VectorStore
 
 class Retriever:
     def __init__(self, embedder: Embedder, vector_store: VectorStore):

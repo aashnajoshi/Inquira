@@ -1,7 +1,7 @@
-from rag_chain import RAGChain, Generator
-from retriever import Retriever
-from embedding import Embedder
-from vector_store import VectorStore
+from app.rag_chain import RAGChain, Generator
+from app.retriever import Retriever
+from app.embedding import Embedder
+from app.vector_store import VectorStore
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -24,7 +24,7 @@ embeddings = embedder.embed_texts(texts)
 vector_store.add(embeddings, docs)
 retriever = Retriever(embedder, vector_store)
 generator = Generator()
-rag_chain = RAGChain(retriever, generator, docs)
+rag_chain = RAGChain(retriever, generator, docs, vector_store)
 
 @app.get("/", response_class=FileResponse)
 async def serve_chat_ui():

@@ -1,8 +1,10 @@
-import requests
-from config import OPENROUTER_API_KEY
-from retriever import Retriever
-from urllib.parse import urlparse
 import re
+import requests
+import numpy as np
+from urllib.parse import urlparse
+from app.config import OPENROUTER_API_KEY
+from app.retriever import Retriever
+from app.embedding import Embedder
 
 class Generator:
     def __init__(self):
@@ -51,10 +53,12 @@ def extract_title_from_url(url: str, docs: list[dict]) -> str:
     return title or "Link"
 
 class RAGChain:
-    def __init__(self, retriever: Retriever, generator: Generator, docs: list[dict]):
+    def __init__(self, retriever: Retriever, generator: Generator, docs: list[dict], vector_store):
         self.retriever = retriever
         self.generator = generator
+        self.vector_store = vector_store
         self.docs = docs
+        self.embedder = Embedder()
 
     def is_small_talk(self, question: str) -> bool:
         casual_keywords = r"\b(hi|hello|hey|bye|thanks|thank you|cool|awesome|okay|who are you|your name|welcome)\b"
@@ -72,14 +76,35 @@ class RAGChain:
             return self.handle_small_talk(question)
 
         docs = self.retriever.retrieve(question)
-        context = "\n\n".join([doc['content'] for doc in docs if doc.get('content')])
-        links = list({doc.get("metadata", {}).get("url", "") for doc in docs if doc.get("metadata", {}).get("url")})
+        docs = [doc for doc in docs if doc.get("content")]
+        context = "\n\n".join([doc['content'] for doc in docs])
         prompt = f"Here’s some info about Indium Technologies:\n\n{context}\n\nQuestion: {question}"
         style = self.classify_query(question)
         response = self.generator.generate(prompt, style=style)
+        question_embedding = self.embedder.embed_texts([question])[0]
+        all_docs_embeddings = self.vector_store.get_documents_with_embeddings()
 
-        if links:
-            link_texts = [f"[{extract_title_from_url(url, self.docs)}]({url})" for url in links]
+        def cosine_sim(a, b):
+            a, b = np.array(a), np.array(b)
+            return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+        scored_docs = []
+        for doc, emb in all_docs_embeddings:
+            score = cosine_sim(question_embedding, emb)
+            scored_docs.append((score, doc))
+
+        scored_docs.sort(reverse=True, key=lambda x: x[0])
+        top_links = []
+        seen = set()
+        for score, doc in scored_docs:
+            url = doc.get("metadata", {}).get("url")
+            if score > 0.6 and url and url not in seen:
+                seen.add(url)
+                top_links.append(url)
+            if len(top_links) >= 3:
+                break
+
+        if top_links:
+            link_texts = [f"[{extract_title_from_url(url, self.docs)}]({url})" for url in top_links]
             response += f"\n\nSource: {', '.join(link_texts)}"
-
         return response
