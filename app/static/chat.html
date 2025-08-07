@@ -1,80 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indium Chatbot</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="static/ui.css">
-  </head>
-  <body
-    class="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 flex flex-col items-center justify-center min-h-screen p-4 overflow-hidden">
-    <div class="fixed inset-0 z-0 opacity-10">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-        <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M0 10L40 10M10 0L10 40" stroke="white" stroke-width="0.5" fill="none" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
-    </div>
-    <div id="search-container"
-      class="w-full max-w-4xl flex flex-col items-center justify-center transition-all duration-300 ease-in-out relative z-10">
-      <h1 class="text-4xl font-bold mb-8 text-center text-white">Indium <span class="text-blue-400">Chatbot</span></h1>
-      <p class="text-gray-400 text-center mb-8 max-w-lg">Explore Indium Technologies with an intelligent assistant
-        that's here to answer your every question!</p>
-      <form id="initial-form" class="w-4/5 flex flex-col items-center">
-        <div class="w-full relative flex items-center">
-          <input id="initial-input" type="text" placeholder="Ask me anything..."
-            class="w-full py-4 px-6 bg-gray-800 border border-gray-700 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
-            autocomplete="off" required />
-          <button type="submit"
-            class="absolute right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition duration-200 flex items-center justify-center h-[42px] w-[42px]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </div>
-      </form>
-    </div>
-    <div id="chat-container"
-      class="w-full max-w-4xl flex-col bg-gray-800 rounded-xl shadow-2xl hidden relative z-10 border border-gray-700">
-      <div
-        class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-800 sticky top-0 z-20 rounded-t-xl">
-        <div class="flex items-center">
-          <h2 class="text-xl font-semibold text-white">Indium Chatbot</h2>
-          <div id="session-indicator" class="ml-3 hidden">
-            <span class="inline-flex h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
-            <span class="text-xs text-green-500 ml-1">Session Active</span>
-          </div>
-        </div>
-        <button id="back-button" class="text-gray-400 hover:text-white transition duration-200">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indium Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="static/ui.css">
+</head>
+<body class="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100 flex flex-col items-center justify-center min-h-screen p-4 overflow-hidden">
+  <div class="fixed inset-0 z-0 opacity-10">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M0 10L40 10M10 0L10 40" stroke="white" stroke-width="0.5" fill="none"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+    </svg>
+  </div>
+  <div id="search-container" class="w-full max-w-4xl flex flex-col items-center justify-center transition-all duration-300 ease-in-out relative z-10">
+    <h1 class="text-4xl font-bold mb-8 text-center text-white">Indium <span class="text-blue-400">Chatbot</span></h1>
+    <p class="text-gray-400 text-center mb-8 max-w-lg">Explore Indium Technologies with an intelligent assistant that's here to answer your every question!</p>
+    <form id="initial-form" class="w-4/5 flex flex-col items-center">
+      <div class="w-full relative flex items-center">
+        <input id="initial-input" type="text" placeholder="Ask me anything..." class="w-full py-4 px-6 bg-gray-800 border border-gray-700 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg" autocomplete="off" required/>
+        <button type="submit" class="absolute right-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition duration-200 flex items-center justify-center h-12 w-12">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
         </button>
       </div>
-      <div id="chat-box" class="flex flex-col p-4 space-y-4 overflow-y-auto" style="height: 500px;"></div>
-      <form id="chat-form" class="flex border-t border-gray-700 p-2">
-        <input id="question-input" type="text" placeholder="Type your message..."
-          class="flex-grow bg-gray-700 text-gray-200 py-3 px-4 rounded-l-lg focus:outline-none" autocomplete="off"
-          required />
-        <button type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-r-lg transition duration-200 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-          </svg>
-          Send
-        </button>
-      </form>
+    </form>
+  </div>
+  <div id="chat-container" class="w-full max-w-4xl flex-col bg-gray-800 rounded-xl shadow-2xl hidden relative z-10 border border-gray-700">
+    <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-800 sticky top-0 z-20 rounded-t-xl">
+      <div class="flex items-center">
+        <h2 class="text-xl font-semibold text-white">Indium Chatbot</h2>
+        <div id="session-indicator" class="ml-3 hidden">
+          <span class="inline-flex h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
+          <span class="text-xs text-green-500 ml-1">Session Active</span>
+        </div>
+      </div>
+      <button id="back-button" class="text-gray-400 hover:text-white transition duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
     </div>
-    <script src="static/chatbot.js"></script>
-  </body>
+    <div id="chat-box" class="flex flex-col p-4 space-y-4 overflow-y-auto" style="height: 500px;"></div>
+    <form id="chat-form" class="flex border-t border-gray-700 p-2">
+      <input id="question-input" type="text" placeholder="Type your message..." class="flex-grow bg-gray-700 text-gray-200 py-3 px-4 rounded-l-lg focus:outline-none" autocomplete="off" required/>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-r-lg transition duration-200 flex items-center justify-center h-12 w-12">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+  <script src="static/chatbot.js"></script>
+</body>
 </html>
