@@ -14,30 +14,36 @@ class Generator:
             "HTTP-Referer": "http://localhost:8000",
             "Content-Type": "application/json"
         }
-
-    def generate(self, prompt: str, temperature=0.6, max_tokens=256, style="detailed") -> str:
+        
+    def generate(self, prompt: str, conversation_history=None, temperature=0.6, max_tokens=256, style="detailed") -> str:
         if style == "brief":
             prompt += "\n\nRespond concisely in 1-2 short sentences, no more than 100 words."
         else:
             prompt += "\n\nRespond clearly and informatively, but keep answer under 500 characters."
-
+        system_message = {
+            "role": "system",
+            "content": (
+                "You are a helpful assistant answering questions about Indium Technologies. "
+                "Answer based on the provided context and previous conversation. "
+                "Keep tone conversational and concise. "
+                "Do not include source links in the response body. "
+                "Maintain context from previous messages in the conversation."
+            )
+        }
+        messages = [system_message]
+        if conversation_history:
+            for msg in conversation_history[:-1][-10:]:
+                messages.append({
+                    "role": msg["role"],
+                    "content": msg["content"]
+                })
+        messages.append({"role": "user", "content": prompt})
         payload = {
             "model": "mistralai/mistral-7b-instruct",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a helpful assistant answering questions about Indium Technologies. "
-                        "Answer only based on the provided context. Keep tone conversational and concise. "
-                        "Do not include source links in the response body."
-                    )
-                },
-                {"role": "user", "content": prompt}
-            ],
+            "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens
         }
-
         response = requests.post(self.api_url, headers=self.headers, json=payload)
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"].strip()
@@ -59,40 +65,39 @@ class RAGChain:
         self.vector_store = vector_store
         self.docs = docs
         self.embedder = Embedder()
-
+        
     def is_small_talk(self, question: str) -> bool:
         casual_keywords = r"\b(hi|hello|hey|bye|thanks|thank you|cool|awesome|okay|who are you|your name|welcome)\b"
         return bool(re.search(casual_keywords, question.lower()))
-
-    def handle_small_talk(self, question: str) -> str:
+    
+    def handle_small_talk(self, question: str, conversation_history=None) -> str:
         prompt = f"You are a friendly chatbot. Reply naturally to: {question}"
-        return self.generator.generate(prompt, temperature=0.8, max_tokens=40, style="brief")
-
+        return self.generator.generate(prompt, conversation_history=conversation_history, temperature=0.8, max_tokens=40, style="brief")
+    
     def classify_query(self, question: str) -> str:
         return "brief" if len(question.strip().split()) <= 5 else "detailed"
-
-    def answer_question(self, question: str) -> str:
+    
+    def answer_question(self, question: str, conversation_history=None) -> str:
         if self.is_small_talk(question):
-            return self.handle_small_talk(question)
-
+            return self.handle_small_talk(question, conversation_history)
         docs = self.retriever.retrieve(question)
         docs = [doc for doc in docs if doc.get("content")]
         context = "\n\n".join([doc['content'] for doc in docs])
-        prompt = f"Here’s some info about Indium Technologies:\n\n{context}\n\nQuestion: {question}"
+        prompt = f"Here's some info about Indium Technologies:\n\n{context}\n\nQuestion: {question}"
+        if conversation_history and len(conversation_history) > 1:
+            prompt += "\n\nRemember to consider our previous conversation when answering."
         style = self.classify_query(question)
-        response = self.generator.generate(prompt, style=style)
+        response = self.generator.generate(prompt, conversation_history=conversation_history, style=style)
         question_embedding = self.embedder.embed_texts([question])[0]
         all_docs_embeddings = self.vector_store.get_documents_with_embeddings()
 
         def cosine_sim(a, b):
             a, b = np.array(a), np.array(b)
             return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-
         scored_docs = []
         for doc, emb in all_docs_embeddings:
             score = cosine_sim(question_embedding, emb)
             scored_docs.append((score, doc))
-
         scored_docs.sort(reverse=True, key=lambda x: x[0])
         top_links = []
         seen = set()
@@ -103,7 +108,7 @@ class RAGChain:
                 top_links.append(url)
             if len(top_links) >= 3:
                 break
-
+                
         if top_links:
             link_texts = [f"[{extract_title_from_url(url, self.docs)}]({url})" for url in top_links]
             response += f"\n\nSource: {', '.join(link_texts)}"
