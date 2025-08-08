@@ -8,6 +8,7 @@ const chatBox = document.getElementById("chat-box");
 const backButton = document.getElementById("back-button");
 const sessionIndicator = document.getElementById("session-indicator");
 let sessionId = null;
+
 function updateSessionIndicator() {
     if (sessionId) {
         sessionIndicator.classList.remove("hidden");
@@ -15,6 +16,7 @@ function updateSessionIndicator() {
         sessionIndicator.classList.add("hidden");
     }
 }
+
 function switchToChatInterface(initialQuestion) {
     searchContainer.classList.add("slide-up");
     setTimeout(() => {
@@ -27,6 +29,7 @@ function switchToChatInterface(initialQuestion) {
     }, 400);
     return new Promise(resolve => setTimeout(resolve, 400));
 }
+
 function switchToSearchInterface() {
     chatContainer.classList.remove("flex", "fade-in");
     chatContainer.classList.add("hidden");
@@ -119,11 +122,18 @@ chatForm.addEventListener("submit", (e) => {
 });
 backButton.addEventListener("click", switchToSearchInterface);
 initialInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         initialForm.dispatchEvent(new Event("submit"));
     }
 });
+questionInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        chatForm.dispatchEvent(new Event("submit"));
+    }
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
     const savedSessionId = localStorage.getItem("chatSessionId");
     if (savedSessionId) {
@@ -131,7 +141,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateSessionIndicator();
         await loadConversationHistory();
     }
+    setupTextareaAutoResize(initialInput);
+    setupTextareaAutoResize(questionInput);
 });
+
+function setupTextareaAutoResize(textarea) {
+    if (!textarea) return;
+    textarea.style.height = '48px';
+    textarea.addEventListener('input', function () {
+        this.style.height = '48px';
+        const newHeight = Math.min(this.scrollHeight, 96);
+        this.style.height = newHeight + 'px';
+        if (this.scrollHeight > 96) {
+            this.classList.add('scrollable');
+        } else {
+            this.classList.remove('scrollable');
+        }
+    });
+}
+
 async function loadConversationHistory() {
     if (!sessionId) return;
     try {
