@@ -1,44 +1,44 @@
-from app.rag_chain import RAGChain, Generator
-from app.retriever import Retriever
-from app.embedding import Embedder
-from app.vector_store import VectorStore
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from langchain.chains import RetrievalQA
+from app.retriever import Retriever
+from app.vector_store import VectorStore
+from app.rag_chain import RAGChain, Generator
+from app.embedding import Embedder
+import uuid
 import json
 from pathlib import Path
 from typing import Dict, List, Optional
-import uuid
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 docs_path = BASE_DIR / "data" / "documents.json"
 static_dir = BASE_DIR / "app" / "static"
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"],)
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 class SessionManager:
     def __init__(self):
         self.sessions: Dict[str, List[Dict[str, str]]] = {}
+
     def get_session(self, session_id: str) -> List[Dict[str, str]]:
         if session_id not in self.sessions:
             self.sessions[session_id] = []
         return self.sessions[session_id]
+
     def add_message(self, session_id: str, role: str, content: str) -> None:
         session = self.get_session(session_id)
         session.append({"role": role, "content": content})
+
     def get_conversation_history(self, session_id: str) -> List[Dict[str, str]]:
         return self.get_session(session_id)
 
 session_manager = SessionManager()
 with open(docs_path, encoding="utf-8") as f:
     docs = json.load(f)
+
 embedder = Embedder()
 vector_store = VectorStore(dimension=768)
 texts = [doc['content'] for doc in docs]
@@ -46,7 +46,7 @@ embeddings = embedder.embed_texts(texts)
 vector_store.add(embeddings, docs)
 retriever = Retriever(embedder, vector_store)
 generator = Generator()
-rag_chain = RAGChain(retriever, generator, docs, vector_store)
+rag_chain = RAGChain(retriever, generator)
 
 @app.get("/", response_class=FileResponse)
 async def serve_chat_ui():
