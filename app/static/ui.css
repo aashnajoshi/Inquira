@@ -19,7 +19,6 @@
     resize: none;
     min-height: 24px;
     max-height: 96px;
-    /* 4 lines at 24px line height */
     line-height: 24px;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -80,12 +79,10 @@
 }
 
 @keyframes blink {
-
     0%,
     100% {
         opacity: 0;
     }
-
     50% {
         opacity: 1;
     }
