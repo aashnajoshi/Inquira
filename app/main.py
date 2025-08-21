@@ -71,10 +71,10 @@ async def get_session_id(request: Request) -> str:
 async def ask(request: Request, session_id: str = Depends(get_session_id)):
     data = await request.json()
     question = data.get("question")
-    if not question:
-        return {"answer": "Please provide a question.", "session_id": session_id}
+    if not question: return {"answer": "Please provide a question.", "session_id": session_id}
+    
     session_manager.add_message(session_id, "user", question)
     conversation_history = session_manager.get_conversation_history(session_id)
-    answer = rag_chain.answer_question(question, conversation_history)
+    answer, sources = rag_chain.answer_question(question, conversation_history)
     session_manager.add_message(session_id, "bot", answer)
-    return {"answer": answer, "session_id": session_id}
+    return {"answer": answer, "sources": sources, "session_id": session_id}
