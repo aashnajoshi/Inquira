@@ -1,5 +1,6 @@
 import faiss
 import numpy as np
+from langchain.vectorstores import FAISS
 
 class VectorStore:
     def __init__(self, dimension: int):
