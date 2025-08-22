@@ -5,7 +5,7 @@
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(0.625rem);
   }
 
   to {
@@ -15,15 +15,14 @@
 }
 
 .auto-resize-input {
-  overflow-y: hidden;
   resize: none;
-  min-height: 24px;
-  max-height: 96px;
-  line-height: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  min-height: 2.25rem;
+  max-height: 6.25rem;
+  line-height: 1.5;
+  padding: 1rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  overflow-y: auto;
 }
 
 .auto-resize-input.scrollable {
@@ -31,7 +30,7 @@
 }
 
 .auto-resize-input::-webkit-scrollbar {
-  width: 6px;
+  width: 0.375rem;
 }
 
 .auto-resize-input::-webkit-scrollbar-track {
@@ -40,7 +39,7 @@
 
 .auto-resize-input::-webkit-scrollbar-thumb {
   background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 .auto-resize-input::-webkit-scrollbar-thumb:hover {
@@ -57,46 +56,62 @@
   }
 
   to {
-    transform: translateY(-30px);
+    transform: translateY(-1.875rem);
   }
 }
 
 .typing-effect {
   position: relative;
   overflow: hidden;
+  animation: typing 1s steps(40, end);
 }
 
-.typing-effect::after {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 20px;
-  background-color: #60a5fa;
-  right: -10px;
-  bottom: 4px;
-  opacity: 0;
-  animation: blink 0.8s infinite;
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
-@keyframes blink {
+.message-user,
+.message-bot {
+  transition: all 0.2s ease-in-out;
+}
 
-  0%,
-  100% {
-    opacity: 0;
+.message-user:hover,
+.message-bot:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+}
+
+.animate-gradient-slow {
+  animation: gradient-shift 15s ease-in-out infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
   }
 
   50% {
-    opacity: 1;
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
   }
 }
 
-/* Responsive */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   #initial-form {
     width: 95%;
   }
 
-  .max-w-4xl {
+  .max-w-3xl {
     max-width: 95%;
   }
 }

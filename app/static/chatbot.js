@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chatHistory = [];
         localStorage.removeItem("sessionId");
         localStorage.removeItem("chatHistory");
+        chatBox.innerHTML = "";
     });
 
     loadHistory();
