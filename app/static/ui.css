@@ -1,117 +1,127 @@
 .fade-in {
-  animation: fade-in 0.3s ease-in-out;
+    animation: fade-in 0.3s ease-in-out;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.625rem);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(0.625rem);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .auto-resize-input {
-  resize: none;
-  min-height: 2.25rem;
-  max-height: 6.25rem;
-  line-height: 1.5;
-  padding: 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-  overflow-y: auto;
+    resize: none;
+    min-height: 2.25rem;
+    max-height: 6.25rem;
+    line-height: 1.5;
+    padding: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+    overflow-y: auto;
 }
 
 .auto-resize-input.scrollable {
-  overflow-y: auto;
+    overflow-y: auto;
 }
 
 .auto-resize-input::-webkit-scrollbar {
-  width: 0.375rem;
+    width: 0.375rem;
 }
 
 .auto-resize-input::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .auto-resize-input::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 0.1875rem;
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 0.1875rem;
 }
 
 .auto-resize-input::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.8);
+    background-color: rgba(156, 163, 175, 0.8);
 }
 
 .slide-up {
-  animation: slide-up 0.4s ease-out forwards;
+    animation: slide-up 0.4s ease-out forwards;
 }
 
 @keyframes slide-up {
-  from {
-    transform: translateY(0);
-  }
+    from {
+        transform: translateY(0);
+    }
 
-  to {
-    transform: translateY(-1.875rem);
-  }
+    to {
+        transform: translateY(-1.875rem);
+    }
 }
 
 .typing-effect {
-  position: relative;
-  overflow: hidden;
-  animation: typing 1s steps(40, end);
+    position: relative;
+    overflow: hidden;
+    animation: typing 1s steps(40, end);
 }
 
 @keyframes typing {
-  from {
-    width: 0;
-  }
+    from {
+        width: 0;
+    }
 
-  to {
-    width: 100%;
-  }
+    to {
+        width: 100%;
+    }
 }
 
 .message-user,
 .message-bot {
-  transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .message-user:hover,
 .message-bot:hover {
-  transform: translateY(-0.125rem);
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
 }
 
 .animate-gradient-slow {
-  animation: gradient-shift 15s ease-in-out infinite;
-  background-size: 200% 200%;
+    animation: gradient-shift 15s ease-in-out infinite;
+    background-size: 200% 200%;
 }
 
 @keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
+    0% {
+        background-position: 0% 50%;
+    }
 
-  50% {
-    background-position: 100% 50%;
-  }
+    50% {
+        background-position: 100% 50%;
+    }
 
-  100% {
-    background-position: 0% 50%;
-  }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#chat-box {
+    max-height: 500px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 @media (max-width: 40rem) {
-  #initial-form {
-    width: 95%;
-  }
+    #initial-form {
+        width: 95%;
+    }
 
-  .max-w-3xl {
-    max-width: 95%;
-  }
+    .max-w-3xl {
+        max-width: 95%;
+    }
+
+    #chat-box {
+        max-height: 60vh;
+    }
 }
